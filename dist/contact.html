@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#ffffff;}
+  ::selection{background:#F1A983;color:#1B2427;}
+  .aa-input{font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:#1F2426;background:#fff;border:1px solid #D8DBDD;border-radius:2px;padding:13px 15px;width:100%;box-sizing:border-box;transition:border-color .15s;}
+  .aa-input:focus{outline:none;border-color:#E97132;}
+  .aa-input::placeholder{color:#A6ADB0;}
+</style>
+</helmet>
+<div style="font-family:'IBM Plex Sans',sans-serif;color:#4A5257;background:#ffffff;">
+  <dc-import name="Nav" active="contact" hint-size="100%,76px"></dc-import>
+
+  <section style="max-width:1200px;margin:0 auto;padding:76px 40px 96px;display:grid;grid-template-columns:0.9fr 1.1fr;gap:80px;align-items:start;">
+    <!-- Left column -->
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:2.6px;text-transform:uppercase;color:#E8601C;margin-bottom:22px;">Contact</div>
+      <h1 style="font-family:'Source Serif 4',serif;font-weight:600;font-size:44px;line-height:1.1;letter-spacing:-1px;color:#1F2426;margin:0 0 20px;">Let's talk.</h1>
+      <p style="font-size:17px;line-height:1.65;color:#55606A;margin:0 0 40px;max-width:420px;">Whether you want a specific company covered, access to the underlying models, or a conversation about a role — reach out directly.</p>
+
+      <div style="border-top:1px solid #ECEAE6;">
+        <div style="padding:18px 0;border-bottom:1px solid #ECEAE6;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:#8A9296;margin-bottom:8px;">Email</div>
+          <a href="mailto:eric.liu@alpine-asset.com" style="font-family:'Source Serif 4',serif;font-size:19px;color:#1F2426;text-decoration:none;font-weight:600;" style-hover="color:#E8601C;">eric.liu@alpine-asset.com</a>
+        </div>
+        <div style="padding:18px 0;border-bottom:1px solid #ECEAE6;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:#8A9296;margin-bottom:8px;">Response time</div>
+          <div style="font-size:15.5px;color:#5C666B;">Typically within two business days.</div>
+        </div>
+        <div style="padding:18px 0;border-bottom:1px solid #ECEAE6;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:#8A9296;margin-bottom:10px;">Reach out about</div>
+          <ul style="margin:0;padding-left:18px;color:#5C666B;font-size:15px;line-height:1.8;">
+            <li>Requesting coverage of a company</li>
+            <li>Access to reports &amp; underlying models</li>
+            <li>Notification of new research</li>
+            <li>Roles, mandates &amp; collaboration</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: form -->
+    <div style="border:1px solid #E4E4E4;border-radius:3px;padding:36px 36px 40px;background:#fff;box-shadow:0 1px 2px rgba(31,36,38,.04);">
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center;padding:40px 10px;">
+          <div style="width:52px;height:52px;border-radius:50%;background:#FBEFE7;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7" stroke="#E8601C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:#1F2426;margin:0 0 10px;">Your email is ready to send.</h3>
+          <p style="font-size:15px;line-height:1.6;color:#5C666B;margin:0 0 24px;max-width:340px;margin-left:auto;margin-right:auto;">We've opened a pre-filled message in your email app. If nothing appeared, email us directly at the address on the left.</p>
+          <button onClick="{{ reset }}" style="background:none;border:none;color:#E8601C;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;">← Compose another</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <h2 style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:#1F2426;margin:0 0 4px;">Send a message</h2>
+          <p style="font-size:13.5px;color:#8A9296;margin:0 0 26px;">Opens a pre-filled email — no account required.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+            <div>
+              <label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#8A9296;margin-bottom:8px;">Name</label>
+              <input class="aa-input" value="{{ name }}" onInput="{{ onName }}" placeholder="Jane Doe" />
+            </div>
+            <div>
+              <label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#8A9296;margin-bottom:8px;">Organization</label>
+              <input class="aa-input" value="{{ org }}" onInput="{{ onOrg }}" placeholder="Firm / fund" />
+            </div>
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#8A9296;margin-bottom:8px;">Your email</label>
+            <input class="aa-input" value="{{ email }}" onInput="{{ onEmail }}" placeholder="you@firm.com" />
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#8A9296;margin-bottom:8px;">Reason</label>
+            <select class="aa-input" value="{{ reason }}" onChange="{{ onReason }}" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22><path d=%22M2 4l4 4 4-4%22 stroke=%22%238A9296%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22/></svg>');background-repeat:no-repeat;background-position:right 15px center;">
+              <option>Request coverage of a company</option>
+              <option>Access to reports &amp; models</option>
+              <option>Notify me of new research</option>
+              <option>Roles &amp; collaboration</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div style="margin-bottom:24px;">
+            <label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#8A9296;margin-bottom:8px;">Message</label>
+            <textarea class="aa-input" value="{{ message }}" onInput="{{ onMessage }}" rows="5" placeholder="A few lines about what you're looking for…" style="resize:vertical;min-height:110px;"></textarea>
+          </div>
+          <button onClick="{{ submit }}" style="width:100%;background:#E97132;color:#fff;border:none;font-family:'IBM Plex Sans',sans-serif;font-size:15px;font-weight:600;padding:16px;border-radius:2px;cursor:pointer;" style-hover="background:#E8601C;">Compose email →</button>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,340px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { name:'', org:'', email:'', reason:'Request coverage of a company', message:'', sent:false };
+  renderVals() {
+    const s = this.state;
+    const set = (k) => (e) => this.setState({ [k]: e.target.value });
+    return {
+      name:s.name, org:s.org, email:s.email, reason:s.reason, message:s.message,
+      sent:s.sent, notSent:!s.sent,
+      onName:set('name'), onOrg:set('org'), onEmail:set('email'),
+      onReason:set('reason'), onMessage:set('message'),
+      reset: () => this.setState({ sent:false }),
+      submit: () => {
+        const s = this.state;
+        const subject = `[Alpine Asset] ${s.reason}` + (s.org ? ` — ${s.org}` : '');
+        const body =
+          `Name: ${s.name || '—'}\n` +
+          `Organization: ${s.org || '—'}\n` +
+          `Email: ${s.email || '—'}\n` +
+          `Reason: ${s.reason}\n\n` +
+          `${s.message || ''}`;
+        window.location.href = `mailto:eric.liu@alpine-asset.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        this.setState({ sent:true });
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>
