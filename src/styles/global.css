@@ -1,0 +1,133 @@
+/*
+ * Global base styles + shared building blocks.
+ * Imported once by BaseLayout, so every page inherits it automatically.
+ */
+@import './tokens.css';
+
+/* ---- Fonts ------------------------------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+/* ---- Reset / base ----------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-orange-tint);
+  color: var(--color-ink-deep);
+}
+
+a { color: inherit; }
+img { max-width: 100%; height: auto; display: block; }
+
+/* ---- Shared building blocks ------------------------------------------ */
+
+/* Centered page container — replaces the repeated
+   `max-width:1200px;margin:0 auto;padding:0 40px` everywhere. */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* Small mono "eyebrow" label used above headings across the site. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  color: var(--color-orange-strong);
+  margin: 0 0 22px;
+}
+.eyebrow--muted { color: var(--color-muted); letter-spacing: 2.4px; }
+
+/* Serif display headings. */
+.h-display {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--color-ink);
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* Buttons ------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 15px 28px;
+  border-radius: 2px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+}
+.btn--primary { background: var(--color-orange); color: #fff; }
+.btn--primary:hover { background: var(--color-orange-strong); }
+.btn--dark { background: var(--color-ink-deep); color: #fff; }
+.btn--dark:hover { background: var(--color-navy); }
+.btn--ghost {
+  background: #fff;
+  color: var(--color-ink);
+  border-color: var(--color-border);
+}
+.btn--ghost:hover { border-color: var(--color-ink); }
+
+/* ---- Prose: styling for author-written Markdown ---------------------- */
+/*
+ * This is what turns Selma's plain Markdown into a designed report body.
+ * She never writes a class or a colour — these rules do it for her.
+ */
+.prose { color: var(--color-text); font-size: 17px; line-height: 1.72; }
+.prose > :first-child { margin-top: 0; }
+.prose > :last-child { margin-bottom: 0; }
+
+.prose h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: var(--color-ink);
+  margin: 40px 0 16px;
+}
+.prose h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--color-ink);
+  margin: 30px 0 10px;
+}
+.prose p { margin: 0 0 18px; }
+.prose strong { color: var(--color-ink); font-weight: 600; }
+.prose a { color: var(--color-orange-strong); text-decoration: none; font-weight: 600; }
+.prose a:hover { text-decoration: underline; }
+.prose ul,
+.prose ol { margin: 0 0 18px; padding-left: 20px; color: var(--color-text-softer); }
+.prose li { margin-bottom: 8px; }
+.prose blockquote {
+  margin: 24px 0;
+  padding: 4px 0 4px 22px;
+  border-left: 3px solid var(--color-orange);
+  color: var(--color-text-soft);
+  font-style: italic;
+}
+.prose hr { border: none; border-top: 1px solid var(--color-border-band); margin: 34px 0; }

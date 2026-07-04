@@ -1,0 +1,123 @@
+---
+/**
+ * Research index — lists every published report as a card.
+ * Add a Markdown file to src/content/reports/ and it appears here automatically.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedReports, impliedReturn, formatPercent, formatPrice, formatDate } from '../../lib/reports';
+
+const reports = await getPublishedReports();
+---
+
+<BaseLayout
+  title="Research — Alpine Asset"
+  description="Initiation reports and ongoing analysis across the energy & utilities sector."
+  active="research"
+>
+  <section class="container header">
+    <p class="eyebrow">Research</p>
+    <h1 class="h-display heading">Published coverage</h1>
+    <p class="sub">
+      Initiation reports and ongoing analysis across the energy &amp; utilities
+      sector. Each report ships with the full three-statement model behind it.
+    </p>
+  </section>
+
+  <section class="container list">
+    {reports.map((report) => {
+      const d = report.data;
+      return (
+        <a class="row" href={`/research/${report.id}/`}>
+          <div class="row-main">
+            <div class="row-ticker">{d.ticker} · {d.exchange}</div>
+            <h2 class="row-company">{d.company}</h2>
+            <p class="row-sector">{d.coverageType} · {d.sector}</p>
+          </div>
+          <div class="row-stats">
+            <div class="stat">
+              <span class="stat-k">Rating</span>
+              <span class="stat-v">{d.rating}</span>
+            </div>
+            <div class="stat">
+              <span class="stat-k">Target</span>
+              <span class="stat-v">{formatPrice(d.targetPrice)}</span>
+            </div>
+            <div class="stat">
+              <span class="stat-k">Implied 12M</span>
+              <span class="stat-v">{formatPercent(impliedReturn(d))}</span>
+            </div>
+          </div>
+          <div class="row-meta">
+            <span class="date">{formatDate(d.date)}</span>
+            <span class="arrow">→</span>
+          </div>
+        </a>
+      );
+    })}
+  </section>
+
+  <section class="container more">
+    <div class="more-inner">
+      <div class="dot"></div>
+      <p>
+        Additional energy &amp; utilities coverage is in progress.{' '}
+        <a href="/contact/">Request a company</a> or ask to be notified of new reports.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .header { padding: 76px 0 44px; border-bottom: 1px solid var(--color-border-band); }
+  .header .heading { font-size: 46px; margin-bottom: 20px; max-width: 760px; }
+  .sub { font-size: 17px; line-height: 1.6; color: var(--color-text-soft); margin: 0; max-width: 600px; }
+
+  .list { padding: 40px 0 8px; display: flex; flex-direction: column; }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 48px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--color-border-band);
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.15s ease;
+  }
+  .row:hover { opacity: 0.72; }
+  .row-ticker {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--color-orange-strong);
+    margin-bottom: 6px;
+  }
+  .row-company { font-family: var(--font-serif); font-size: 24px; font-weight: 600; color: var(--color-ink); margin: 0 0 6px; }
+  .row-sector { font-size: 13.5px; color: var(--color-muted); margin: 0; }
+
+  .row-stats { display: flex; gap: 40px; }
+  .stat { display: flex; flex-direction: column; gap: 5px; }
+  .stat-k {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .stat-v { font-family: var(--font-serif); font-size: 18px; font-weight: 600; color: var(--color-ink); }
+
+  .row-meta { display: flex; align-items: center; gap: 18px; }
+  .date { font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; color: var(--color-muted); }
+  .arrow { font-family: var(--font-mono); color: var(--color-orange); }
+
+  .more { padding: 24px 0 88px; }
+  .more-inner { border-top: 1px solid var(--color-border-band); padding-top: 34px; display: flex; align-items: center; gap: 16px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-orange); flex-shrink: 0; }
+  .more p { font-size: 15px; color: var(--color-muted); margin: 0; }
+  .more a { color: var(--color-orange-strong); text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 820px) {
+    .row { grid-template-columns: 1fr; gap: 18px; }
+    .row-stats { gap: 32px; }
+  }
+</style>

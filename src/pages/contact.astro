@@ -1,0 +1,202 @@
+---
+/**
+ * Contact page. The form is interactive — it composes a pre-filled mailto:
+ * link in the browser. This shows that when a page genuinely needs
+ * interactivity, Astro handles it with a small client-side script; the author
+ * never has to touch this page.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const email = 'eric.liu@alpine-asset.com';
+const reasons = [
+  'Request coverage of a company',
+  'Access to reports & models',
+  'Notify me of new research',
+  'Roles & collaboration',
+  'Other',
+];
+---
+
+<BaseLayout
+  title="Contact — Alpine Asset"
+  description="Request coverage, access underlying models, or start a conversation with Alpine Asset."
+  active="contact"
+>
+  <section class="container wrap">
+    <!-- Left column -->
+    <div>
+      <p class="eyebrow">Contact</p>
+      <h1 class="h-display heading">Let's talk.</h1>
+      <p class="sub">
+        Whether you want a specific company covered, access to the underlying
+        models, or a conversation about a role — reach out directly.
+      </p>
+
+      <div class="details">
+        <div class="detail">
+          <div class="detail-k">Email</div>
+          <a class="detail-email" href={`mailto:${email}`}>{email}</a>
+        </div>
+        <div class="detail">
+          <div class="detail-k">Response time</div>
+          <div class="detail-v">Typically within two business days.</div>
+        </div>
+        <div class="detail">
+          <div class="detail-k">Reach out about</div>
+          <ul>
+            <li>Requesting coverage of a company</li>
+            <li>Access to reports &amp; underlying models</li>
+            <li>Notification of new research</li>
+            <li>Roles, mandates &amp; collaboration</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: form -->
+    <div class="form-card">
+      <div id="form-view">
+        <h2 class="form-title">Send a message</h2>
+        <p class="form-note">Opens a pre-filled email — no account required.</p>
+        <form id="contact-form" data-email={email}>
+          <div class="grid2">
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" class="aa-input" placeholder="Jane Doe" />
+            </div>
+            <div class="field">
+              <label for="f-org">Organization</label>
+              <input id="f-org" name="org" class="aa-input" placeholder="Firm / fund" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-email">Your email</label>
+            <input id="f-email" name="email" type="email" class="aa-input" placeholder="you@firm.com" />
+          </div>
+          <div class="field">
+            <label for="f-reason">Reason</label>
+            <select id="f-reason" name="reason" class="aa-input select">
+              {reasons.map((r) => <option>{r}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-message">Message</label>
+            <textarea id="f-message" name="message" class="aa-input" rows="5" placeholder="A few lines about what you're looking for…"></textarea>
+          </div>
+          <button type="submit" class="submit">Compose email →</button>
+        </form>
+      </div>
+
+      <div id="sent-view" hidden>
+        <div class="sent">
+          <div class="check">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="#E8601C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </div>
+          <h3>Your email is ready to send.</h3>
+          <p>We've opened a pre-filled message in your email app. If nothing appeared, email us directly at the address on the left.</p>
+          <button id="compose-another" type="button">← Compose another</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const formView = document.getElementById('form-view');
+  const sentView = document.getElementById('sent-view');
+  const again = document.getElementById('compose-another');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const to = form.dataset.email ?? '';
+    const org = String(data.get('org') || '');
+    const reason = String(data.get('reason') || '');
+    const subject = `[Alpine Asset] ${reason}` + (org ? ` — ${org}` : '');
+    const body =
+      `Name: ${data.get('name') || '—'}\n` +
+      `Organization: ${org || '—'}\n` +
+      `Email: ${data.get('email') || '—'}\n` +
+      `Reason: ${reason}\n\n` +
+      `${data.get('message') || ''}`;
+    window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    formView?.setAttribute('hidden', '');
+    sentView?.removeAttribute('hidden');
+  });
+
+  again?.addEventListener('click', () => {
+    sentView?.setAttribute('hidden', '');
+    formView?.removeAttribute('hidden');
+  });
+</script>
+
+<style>
+  .wrap { padding: 76px 0 96px; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 80px; align-items: start; }
+  .heading { font-size: 44px; margin-bottom: 20px; }
+  .sub { font-size: 17px; line-height: 1.65; color: var(--color-text-soft); margin: 0 0 40px; max-width: 420px; }
+
+  .details { border-top: 1px solid var(--color-border-band); }
+  .detail { padding: 18px 0; border-bottom: 1px solid var(--color-border-band); }
+  .detail-k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 8px; }
+  .detail-email { font-family: var(--font-serif); font-size: 19px; color: var(--color-ink); text-decoration: none; font-weight: 600; }
+  .detail-email:hover { color: var(--color-orange-strong); }
+  .detail-v { font-size: 15.5px; color: var(--color-text-softer); }
+  .detail ul { margin: 0; padding-left: 18px; color: var(--color-text-softer); font-size: 15px; line-height: 1.8; }
+
+  .form-card { border: 1px solid var(--color-border); border-radius: 3px; padding: 36px 36px 40px; background: #fff; box-shadow: 0 1px 2px rgba(31, 36, 38, 0.04); }
+  .form-title { font-family: var(--font-serif); font-size: 22px; font-weight: 600; color: var(--color-ink); margin: 0 0 4px; }
+  .form-note { font-size: 13.5px; color: var(--color-muted); margin: 0 0 26px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 8px; }
+
+  .aa-input {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--color-ink);
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    padding: 12px 14px;
+  }
+  .aa-input:focus { outline: none; border-color: var(--color-orange); }
+  .aa-input::placeholder { color: var(--color-muted-soft); }
+  textarea.aa-input { resize: vertical; min-height: 110px; }
+  .select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="%238A9296" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+  }
+
+  .submit {
+    width: 100%;
+    background: var(--color-orange);
+    color: #fff;
+    border: none;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.15s ease;
+  }
+  .submit:hover { background: var(--color-orange-strong); }
+
+  .sent { text-align: center; padding: 40px 10px; }
+  .check { width: 52px; height: 52px; border-radius: 50%; background: #fbefe7; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; }
+  .sent h3 { font-family: var(--font-serif); font-size: 22px; font-weight: 600; color: var(--color-ink); margin: 0 0 10px; }
+  .sent p { font-size: 15px; line-height: 1.6; color: var(--color-text-softer); margin: 0 auto 24px; max-width: 340px; }
+  .sent button { background: none; border: none; color: var(--color-orange-strong); font-family: var(--font-sans); font-size: 14px; font-weight: 600; cursor: pointer; }
+
+  @media (max-width: 820px) {
+    .wrap { grid-template-columns: 1fr; gap: 48px; }
+    .grid2 { grid-template-columns: 1fr; }
+  }
+</style>

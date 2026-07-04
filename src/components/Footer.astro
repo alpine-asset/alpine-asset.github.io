@@ -1,0 +1,115 @@
+---
+/**
+ * Site footer. Ported from the old Footer.dc.html.
+ * The copyright year is derived at build time — never hand-edited.
+ */
+const year = new Date().getFullYear();
+const email = 'eric.liu@alpine-asset.com';
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="top">
+      <div class="blurb">
+        <div class="brand">
+          <svg width="28" height="28" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+            <path d="M2 25 L11 8 L15.5 16 L18.5 11 L28 25 Z" fill="#E4E9EA" />
+            <path d="M11 8 L15.5 16 L12.5 16 L9.5 11 Z" fill="#E97132" />
+          </svg>
+          <span class="brand-name">Alpine Asset</span>
+        </div>
+        <p>
+          Independent equity research on energy &amp; utilities. Rigorous,
+          conflict-free analysis for institutional investors.
+        </p>
+      </div>
+
+      <div class="cols">
+        <div>
+          <div class="col-head">Site</div>
+          <div class="col-links">
+            <a href="/">Home</a>
+            <a href="/research/">Research</a>
+            <a href="/about/">About</a>
+            <a href="/contact/">Contact</a>
+          </div>
+        </div>
+        <div>
+          <div class="col-head">Contact</div>
+          <div class="col-links">
+            <a href={`mailto:${email}`}>{email}</a>
+            <span class="dim">alpine-asset.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <p class="legal">
+        © {year} Alpine Asset Research Group. Research is provided for
+        informational purposes only and does not constitute investment advice, an
+        offer, or a solicitation to buy or sell any security. Views expressed
+        reflect the analyst's personal opinions as of the publication date.
+      </p>
+      <span class="tag">Independent Research</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    width: 100%;
+    background: var(--color-footer-bg);
+    color: var(--color-footer-text);
+    font-family: var(--font-sans);
+  }
+  .site-footer .container { padding-top: 64px; }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 48px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--color-footer-line);
+  }
+  .blurb { max-width: 360px; }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .brand-name {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 19px;
+    color: var(--color-footer-heading);
+  }
+  .blurb p { font-size: 14px; line-height: 1.65; color: #939ea1; margin: 0; }
+
+  .cols { display: flex; gap: 72px; flex-wrap: wrap; }
+  .col-head {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.8px;
+    color: var(--color-footer-muted);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .col-links { display: flex; flex-direction: column; gap: 12px; }
+  .col-links a { color: var(--color-footer-text); text-decoration: none; font-size: 14px; }
+  .col-links a:hover { color: #fff; }
+  .col-links .dim { color: #939ea1; font-size: 14px; }
+
+  .bottom {
+    padding: 26px 0 40px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .legal { font-size: 11.5px; line-height: 1.7; color: var(--color-footer-muted); margin: 0; max-width: 720px; }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: #5a6669;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+</style>
