@@ -86,8 +86,29 @@ const links = [
   }
   .nav-cta:hover { border-color: var(--color-ink); }
 
-  @media (max-width: 640px) {
-    .nav { gap: 20px; }
-    .nav-link { font-size: 11px; }
+  /* Tablet / large phone: tighten spacing so the single-row bar still fits. */
+  @media (max-width: 720px) {
+    .nav { gap: 24px; }
+  }
+
+  /* Phone: the four links no longer fit beside the logo, so drop the nav onto
+     its own full-width row below the brand and space the links evenly. */
+  @media (max-width: 560px) {
+    .bar {
+      height: auto;
+      min-height: 64px;
+      flex-wrap: wrap;
+      row-gap: 14px;
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+    .nav {
+      width: 100%;
+      gap: 14px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .nav-link { font-size: 11px; letter-spacing: 0.8px; }
+    .nav-cta { padding: 8px 14px; }
   }
 </style>

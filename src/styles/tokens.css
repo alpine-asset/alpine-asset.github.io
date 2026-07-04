@@ -52,3 +52,8 @@
   --container: 1200px;
   --gutter: 40px;
 }
+
+/* Narrower side gutters on phones so content gets more breathing room. */
+@media (max-width: 640px) {
+  :root { --gutter: 24px; }
+}
