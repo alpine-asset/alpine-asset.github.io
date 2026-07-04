@@ -1,0 +1,54 @@
+/*
+ * Alpine Asset — Design tokens (the single source of truth for the brand).
+ *
+ * Every colour, font, and layout constant that used to be copy-pasted inline on
+ * every page now lives here. Change a value once and it updates everywhere.
+ * Nothing in a page or content file should hard-code a hex colour or font name.
+ */
+:root {
+  /* ---- Brand ---------------------------------------------------------- */
+  --color-orange: #e97132;         /* primary accent / buttons */
+  --color-orange-strong: #e8601c;  /* hover / emphasis */
+  --color-orange-tint: #f1a983;    /* selection highlight */
+  --color-navy: #233c43;           /* logo mark, dark-button hover */
+
+  /* ---- Ink & text ----------------------------------------------------- */
+  --color-ink: #1f2426;            /* headings / near-black */
+  --color-ink-deep: #1b2427;       /* darkest — footer bg, dark buttons */
+  --color-text: #4a5257;           /* default body text */
+  --color-text-soft: #55606a;      /* secondary body */
+  --color-text-softer: #5c666b;    /* tertiary body */
+  --color-muted: #8a9296;          /* labels, captions */
+  --color-muted-soft: #a6adb0;     /* faint captions */
+
+  /* ---- Surfaces ------------------------------------------------------- */
+  --color-bg: #ffffff;
+  --color-surface: #f9f8f6;        /* card headers */
+  --color-surface-band: #f7f5f2;   /* full-width section band */
+  --color-surface-hover: #fbf7f4;  /* subtle hover fill */
+
+  /* ---- Lines ---------------------------------------------------------- */
+  --color-border: #e4e4e4;
+  --color-border-soft: #eeece9;
+  --color-border-band: #eceae6;
+
+  /* ---- Footer (dark) -------------------------------------------------- */
+  --color-footer-bg: #1b2427;
+  --color-footer-line: #33403f;
+  --color-footer-text: #c4cbce;
+  --color-footer-muted: #6e7b7e;
+  --color-footer-heading: #f2f5f5;
+
+  /* ---- Semantic ------------------------------------------------------- */
+  --color-positive: #2f8a5b;       /* catalysts, gains */
+  --color-negative: #c0492b;       /* risks, losses */
+
+  /* ---- Typography ----------------------------------------------------- */
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* ---- Layout --------------------------------------------------------- */
+  --container: 1200px;
+  --gutter: 40px;
+}

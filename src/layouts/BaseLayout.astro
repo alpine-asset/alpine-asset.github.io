@@ -1,0 +1,39 @@
+---
+/**
+ * The one page shell every page uses: <head>, fonts, global styles,
+ * the shared Nav and Footer. Individual pages only supply their content.
+ */
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  active?: 'home' | 'research' | 'about' | 'contact';
+}
+const {
+  title,
+  description = 'Independent equity research on energy & utilities for institutional investors.',
+  active = 'home',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  </head>
+  <body>
+    <Nav active={active} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

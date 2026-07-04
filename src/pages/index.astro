@@ -1,0 +1,183 @@
+---
+/**
+ * Home page. The "Latest Coverage" tear-sheet card is populated automatically
+ * from the newest report in the collection — publish a report and the home
+ * page updates itself.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLatestReport, impliedReturn, formatPercent, formatPrice, formatDate } from '../lib/reports';
+
+const latest = await getLatestReport();
+const approach = [
+  {
+    title: 'Independent & conflict-free',
+    body: 'No banking relationships, no trading book, no house view to defend. Every rating reflects one thing: where the analysis leads.',
+  },
+  {
+    title: 'Built from first principles',
+    body: 'Full three-statement models and sum-of-the-parts valuation. Conclusions are traceable to assumptions you can inspect and challenge.',
+  },
+  {
+    title: 'Energy & utilities focus',
+    body: 'Deep, sector-specific coverage of the power transition — regulated utilities, renewables developers, and the demand drivers reshaping both.',
+  },
+];
+---
+
+<BaseLayout title="Alpine Asset — Independent Equity Research" active="home">
+  <!-- HERO -->
+  <section class="container hero">
+    <div>
+      <p class="eyebrow">Independent Equity Research</p>
+      <h1 class="h-display headline">Clear-eyed research on energy &amp; utilities.</h1>
+      <p class="lede">
+        Alpine Asset publishes rigorous, conflict-free equity research for
+        institutional investors — built on full three-statement modeling, not
+        sell-side incentives.
+      </p>
+      <div class="actions">
+        <a class="btn btn--primary" href="/research/">Read the research →</a>
+        <a class="btn btn--ghost" href="/about/">About Alpine</a>
+      </div>
+    </div>
+
+    {latest && (
+      <a class="tearsheet" href={`/research/${latest.id}/`}>
+        <div class="ts-head">
+          <span class="ts-label">Latest Coverage</span>
+          <span class="ts-label">{formatDate(latest.data.date)}</span>
+        </div>
+        <div class="ts-body">
+          <div class="ts-ticker">{latest.data.ticker} · {latest.data.exchange}</div>
+          <div class="ts-company">{latest.data.company}</div>
+          <div class="ts-sub">{latest.data.coverageType} · {latest.data.sector}</div>
+          <div class="ts-grid">
+            <div class="ts-cell br bb">
+              <div class="ts-k">Rating</div>
+              <div class="ts-v">{latest.data.rating}</div>
+            </div>
+            <div class="ts-cell bb">
+              <div class="ts-k">Target Price</div>
+              <div class="ts-v">{formatPrice(latest.data.targetPrice)}</div>
+            </div>
+            <div class="ts-cell br">
+              <div class="ts-k">Implied 12M</div>
+              <div class="ts-v">{formatPercent(impliedReturn(latest.data))}</div>
+            </div>
+            <div class="ts-cell">
+              <div class="ts-k">Method</div>
+              <div class="ts-v">{latest.data.method}</div>
+            </div>
+          </div>
+        </div>
+        <span class="ts-foot">View full report <span class="ts-arrow">→</span></span>
+      </a>
+    )}
+  </section>
+
+  <!-- APPROACH -->
+  <section class="approach">
+    <div class="container">
+      <p class="eyebrow eyebrow--muted">The Approach</p>
+      <h2 class="h-display approach-h">Research written to be right, not to sell.</h2>
+      <div class="cards">
+        {approach.map((c) => (
+          <div class="card">
+            <div class="rule"></div>
+            <h3>{c.title}</h3>
+            <p>{c.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container cta">
+    <div>
+      <h2 class="h-display cta-h">Want the full analysis, or a second opinion?</h2>
+      <p class="cta-p">Reach out directly — reports, models, and coverage requests.</p>
+    </div>
+    <a class="btn btn--dark" href="/contact/">Get in touch →</a>
+  </section>
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .hero {
+    padding: 88px 40px 76px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .headline { font-size: 56px; line-height: 1.08; letter-spacing: -1.2px; margin-bottom: 26px; }
+  .lede { font-size: 18px; line-height: 1.65; color: var(--color-text-soft); margin: 0 0 38px; max-width: 520px; }
+  .actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* TEAR SHEET */
+  .tearsheet {
+    display: block;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(31, 36, 38, 0.04);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .tearsheet:hover { box-shadow: 0 4px 16px rgba(31, 36, 38, 0.08); transform: translateY(-1px); }
+  .ts-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--color-border-soft);
+    background: var(--color-surface);
+    border-radius: 3px 3px 0 0;
+  }
+  .ts-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--color-muted); }
+  .ts-body { padding: 24px 22px 8px; }
+  .ts-ticker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; color: var(--color-orange-strong); margin-bottom: 6px; }
+  .ts-company { font-family: var(--font-serif); font-size: 26px; font-weight: 600; color: var(--color-ink); line-height: 1.15; margin-bottom: 4px; }
+  .ts-sub { font-size: 13px; color: var(--color-muted); margin-bottom: 22px; }
+  .ts-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--color-border-soft); }
+  .ts-cell { padding: 14px 0; }
+  .ts-cell.br { border-right: 1px solid var(--color-border-soft); padding-right: 16px; }
+  .ts-cell.bb { border-bottom: 1px solid var(--color-border-soft); }
+  .ts-cell:not(.br) { padding-left: 16px; }
+  .ts-k { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 5px; }
+  .ts-v { font-family: var(--font-serif); font-size: 19px; color: var(--color-ink); font-weight: 600; }
+  .ts-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 22px;
+    border-top: 1px solid var(--color-border-soft);
+    color: var(--color-orange-strong);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .tearsheet:hover .ts-foot { background: var(--color-surface-hover); }
+  .ts-arrow { font-family: var(--font-mono); }
+
+  /* APPROACH */
+  .approach { background: var(--color-surface-band); border-top: 1px solid var(--color-border-band); border-bottom: 1px solid var(--color-border-band); }
+  .approach .container { padding-top: 76px; padding-bottom: 76px; }
+  .approach-h { font-size: 34px; letter-spacing: -0.6px; margin: 0 0 52px; max-width: 640px; line-height: 1.2; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
+  .rule { width: 38px; height: 2px; background: var(--color-orange); margin-bottom: 20px; }
+  .card h3 { font-family: var(--font-serif); font-size: 20px; font-weight: 600; color: var(--color-ink); margin: 0 0 12px; }
+  .card p { font-size: 15px; line-height: 1.65; color: var(--color-text-softer); margin: 0; }
+
+  /* CTA */
+  .cta { padding: 82px 40px; display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap; }
+  .cta-h { font-size: 32px; letter-spacing: -0.5px; margin: 0 0 10px; line-height: 1.2; }
+  .cta-p { font-size: 16px; color: var(--color-text-softer); margin: 0; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 48px; padding-top: 60px; }
+    .headline { font-size: 42px; }
+    .cards { grid-template-columns: 1fr; gap: 36px; }
+  }
+</style>

@@ -1,0 +1,93 @@
+---
+/**
+ * Site header / navigation. Ported from the old Nav.dc.html.
+ * `active` highlights the current page in the nav.
+ */
+interface Props {
+  active?: 'home' | 'research' | 'about' | 'contact';
+}
+const { active = 'home' } = Astro.props;
+
+const links = [
+  { key: 'home', label: 'Home', href: '/' },
+  { key: 'research', label: 'Research', href: '/research/' },
+  { key: 'about', label: 'About', href: '/about/' },
+] as const;
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a href="/" class="brand" aria-label="Alpine Asset — home">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <path d="M2 25 L11 8 L15.5 16 L18.5 11 L28 25 Z" fill="#233C43" />
+        <path d="M11 8 L15.5 16 L12.5 16 L9.5 11 Z" fill="#E97132" />
+      </svg>
+      <span class="brand-text">
+        <span class="brand-name">Alpine Asset</span>
+        <span class="brand-sub">RESEARCH GROUP</span>
+      </span>
+    </a>
+    <nav class="nav">
+      {links.map((l) => (
+        <a href={l.href} class:list={['nav-link', { active: active === l.key }]}>{l.label}</a>
+      ))}
+      <a href="/contact/" class:list={['nav-link', 'nav-cta', { active: active === 'contact' }]}>Contact</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    width: 100%;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-sans);
+  }
+  .bar {
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand-text { display: flex; flex-direction: column; line-height: 1; }
+  .brand-name {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 19px;
+    color: var(--color-ink);
+    letter-spacing: -0.2px;
+  }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 2.4px;
+    color: var(--color-muted);
+    margin-top: 3px;
+  }
+  .nav { display: flex; align-items: center; gap: 38px; }
+  .nav-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 500;
+    color: #4a5257;
+    transition: color 0.15s ease;
+  }
+  .nav-link:hover { color: var(--color-orange-strong); }
+  .nav-link.active { color: var(--color-orange-strong); font-weight: 600; }
+  .nav-cta {
+    padding: 9px 18px;
+    border: 1px solid #d3d6d8;
+    border-radius: 2px;
+    color: var(--color-ink);
+  }
+  .nav-cta:hover { border-color: var(--color-ink); }
+
+  @media (max-width: 640px) {
+    .nav { gap: 20px; }
+    .nav-link { font-size: 11px; }
+  }
+</style>
