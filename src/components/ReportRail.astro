@@ -106,6 +106,14 @@ const rows: Array<[string, string]> = [
     transition: background 0.15s ease;
   }
   .download:hover { background: var(--color-orange-strong); }
+
+  /* On mobile the report collapses to a single column (see the report
+     layout's 820px breakpoint), so the rail must scroll with the content
+     instead of staying pinned and overlapping the article text. */
+  @media (max-width: 820px) {
+    .rail { position: static; top: auto; }
+  }
+
   .source {
     font-family: var(--font-mono);
     font-size: 10px;
