@@ -49,3 +49,12 @@ export function formatDate(date: Date, withDay = false): string {
   const year = date.getUTCFullYear();
   return withDay ? `${month} ${date.getUTCDate()} ${year}` : `${month} ${year}`;
 }
+
+/** Long-form month + year, e.g. Date -> "June 2026". Used in the report byline. */
+export function formatMonthYear(date: Date): string {
+  const month = date.toLocaleString('en-US', {
+    month: 'long',
+    timeZone: 'UTC',
+  });
+  return `${month} ${date.getUTCFullYear()}`;
+}

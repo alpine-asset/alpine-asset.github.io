@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_EMAIL } from '../lib/site';
 
 const facts = [
   ['Focus', 'Energy & Utilities'],
@@ -35,7 +36,7 @@ const steps = [
       <div class="who-meta">
         <div class="who-name serif-value">Eric Liu</div>
         <div class="who-role overline">Founder &amp; Analyst</div>
-        <a class="who-email" href="mailto:eric.liu@alpine-asset.com">eric.liu@alpine-asset.com</a>
+        <a class="who-email" href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
       </div>
     </div>
 

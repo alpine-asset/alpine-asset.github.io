@@ -1,0 +1,36 @@
+---
+/**
+ * The Alpine Asset mountain mark. One source for the logo geometry, which used
+ * to be copy-pasted (with hard-coded fills) in Nav.astro, Footer.astro, and
+ * public/favicon.svg.
+ *
+ * Colour routes through tokens, not hex: the base facet inherits the parent's
+ * `color` via `currentColor` (Nav sets navy, Footer sets the light footer mark
+ * colour), and the accent facet is always the brand orange. `favicon.svg` stays
+ * a standalone file — a static asset can't import a component — but it now
+ * shares this geometry by convention; keep the two in sync if the mark changes.
+ */
+interface Props {
+  size?: number;
+}
+const { size = 30 } = Astro.props;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 30 30"
+  fill="none"
+  aria-hidden="true"
+  class="brand-mark"
+>
+  <path class="mark-base" d="M2 25 L11 8 L15.5 16 L18.5 11 L28 25 Z" />
+  <path class="mark-accent" d="M11 8 L15.5 16 L12.5 16 L9.5 11 Z" />
+</svg>
+
+<style>
+  /* Base facet takes the parent's colour so each placement (nav / footer)
+     tints the mark through a token, never a hard-coded hex. */
+  .mark-base { fill: currentColor; }
+  .mark-accent { fill: var(--color-orange); }
+</style>

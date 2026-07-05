@@ -4,21 +4,15 @@
  * Every value comes from the report's frontmatter — nothing is hand-written here.
  */
 import type { Report } from '../lib/reports';
-import { impliedReturn, formatPercent, formatPrice, formatDate } from '../lib/reports';
+import { formatDate, tearSheetRows } from '../lib/reports';
+import DownloadIcon from './DownloadIcon.astro';
 
 interface Props {
   data: Report['data'];
 }
 const { data } = Astro.props;
 
-const rows: Array<[string, string]> = [
-  ['Rating', data.rating],
-  ['Target Price', formatPrice(data.targetPrice)],
-  ['Market Price', formatPrice(data.marketPrice)],
-  ['Implied 12M', formatPercent(impliedReturn(data))],
-  ...(data.marketCap ? ([['Market Cap', data.marketCap]] as [string, string][]) : []),
-  ['Method', data.method],
-];
+const rows = tearSheetRows(data);
 ---
 
 <aside class="rail">
@@ -31,18 +25,16 @@ const rows: Array<[string, string]> = [
       <div class="ticker">{data.ticker} · {data.exchange}</div>
       <div class="company serif-value">{data.company}</div>
       <div class="rows">
-        {rows.map(([k, v]) => (
+        {rows.map((row) => (
           <div class="row">
-            <span class="row-k">{k}</span>
-            <span class="row-v serif-value">{v}</span>
+            <span class="row-k">{row.label}</span>
+            <span class="row-v serif-value">{row.value}</span>
           </div>
         ))}
       </div>
     </div>
     <a class="btn btn--primary btn--block download" href={data.pdf} download>
-      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M8 1v9m0 0L4.5 6.5M8 10l3.5-3.5M2 13.5h12" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
+      <DownloadIcon />
       Download PDF{data.pdfPages ? ` · ${data.pdfPages}pp` : ''}
     </a>
   </div>

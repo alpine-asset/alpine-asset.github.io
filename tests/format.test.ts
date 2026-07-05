@@ -4,6 +4,7 @@ import {
   formatPercent,
   formatPrice,
   formatDate,
+  formatMonthYear,
 } from '../src/lib/format';
 
 describe('impliedReturn', () => {
@@ -51,5 +52,14 @@ describe('formatDate', () => {
 
   it('includes the day when asked', () => {
     expect(formatDate(june, true)).toBe('JUN 22 2026');
+  });
+});
+
+describe('formatMonthYear', () => {
+  // Use UTC noon so the date is stable regardless of the test machine's zone.
+  const june = new Date('2026-06-22T12:00:00Z');
+
+  it('formats the full month name and year', () => {
+    expect(formatMonthYear(june)).toBe('June 2026');
   });
 });

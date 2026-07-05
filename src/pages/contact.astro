@@ -6,15 +6,19 @@
  * never has to touch this page.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_EMAIL } from '../lib/site';
 
-const email = 'eric.liu@alpine-asset.com';
-const reasons = [
-  'Request coverage of a company',
-  'Access to reports & models',
-  'Notify me of new research',
-  'Roles & collaboration',
-  'Other',
+const email = SITE_EMAIL;
+// One source for the enquiry topics: the dropdown shows the short `option`
+// (plus a trailing "Other"); the "Reach out about" list shows the longer
+// `bullet` phrasing. Kept together so the two can't silently drift apart.
+const topics = [
+  { option: 'Request coverage of a company', bullet: 'Requesting coverage of a company' },
+  { option: 'Access to reports & models', bullet: 'Access to reports & underlying models' },
+  { option: 'Notify me of new research', bullet: 'Notification of new research' },
+  { option: 'Roles & collaboration', bullet: 'Roles, mandates & collaboration' },
 ];
+const reasons = [...topics.map((t) => t.option), 'Other'];
 ---
 
 <BaseLayout
@@ -44,10 +48,7 @@ const reasons = [
         <div class="detail">
           <div class="detail-k overline">Reach out about</div>
           <ul>
-            <li>Requesting coverage of a company</li>
-            <li>Access to reports &amp; underlying models</li>
-            <li>Notification of new research</li>
-            <li>Roles, mandates &amp; collaboration</li>
+            {topics.map((t) => <li>{t.bullet}</li>)}
           </ul>
         </div>
       </div>
@@ -90,7 +91,7 @@ const reasons = [
       <div id="sent-view" hidden>
         <div class="sent">
           <div class="check">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="#E8601C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
           </div>
           <h3>Your email is ready to send.</h3>
           <p>We've opened a pre-filled message in your email app. If nothing appeared, email us directly at the address on the left.</p>
@@ -172,6 +173,10 @@ const reasons = [
   .select {
     appearance: none;
     -webkit-appearance: none;
+    /* KNOWN EXCEPTION: the chevron colour (%238A9296 = --color-muted) is baked
+       into this data URI. CSS custom properties don't resolve inside url(), so
+       this is the one place a colour can't reference a token — keep it in sync
+       with --color-muted by hand if that token changes. */
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="%238A9296" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>');
     background-repeat: no-repeat;
     background-position: right 15px center;
@@ -181,7 +186,8 @@ const reasons = [
   .submit { margin-top: 8px; }
 
   .sent { text-align: center; padding: 40px 10px; }
-  .check { width: 52px; height: 52px; border-radius: 50%; background: var(--color-orange-wash); display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; }
+  /* `color` sets the check-mark stroke (currentColor) through a token. */
+  .check { width: 52px; height: 52px; border-radius: 50%; background: var(--color-orange-wash); color: var(--color-orange-strong); display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; }
   .sent h3 { font-family: var(--font-serif); font-size: 22px; font-weight: 600; color: var(--color-ink); margin: 0 0 10px; }
   .sent p { font-size: 15px; line-height: 1.6; color: var(--color-text-softer); margin: 0 auto 24px; max-width: 340px; }
   .sent button { background: none; border: none; color: var(--color-orange-strong); font-family: var(--font-sans); font-size: 14px; font-weight: 600; cursor: pointer; }

@@ -18,6 +18,7 @@ import '@fontsource/ibm-plex-mono/500.css';
 import '@fontsource/ibm-plex-mono/600.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { SITE_NAME, SITE_EMAIL, SITE_DESCRIPTION } from '../lib/site';
 
 interface Props {
   title: string;
@@ -28,7 +29,7 @@ interface Props {
 }
 const {
   title,
-  description = 'Independent equity research on energy & utilities for institutional investors.',
+  description = SITE_DESCRIPTION,
   active = 'home',
   image = '/og-default.png',
 } = Astro.props;
@@ -40,11 +41,10 @@ const ogImage = new URL(image, Astro.site);
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Alpine Asset Research Group',
+  name: SITE_NAME,
   url: Astro.site?.href,
-  description:
-    'Independent equity research on energy & utilities for institutional investors.',
-  email: 'eric.liu@alpine-asset.com',
+  description: SITE_DESCRIPTION,
+  email: SITE_EMAIL,
 };
 ---
 
@@ -60,7 +60,7 @@ const orgSchema = {
 
     <!-- Social share (Open Graph + Twitter) -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Alpine Asset Research Group" />
+    <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />

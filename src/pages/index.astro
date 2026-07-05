@@ -5,9 +5,16 @@
  * page updates itself.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getLatestReport, impliedReturn, formatPercent, formatPrice, formatDate } from '../lib/reports';
+import { getLatestReport, formatDate, tearSheetRows } from '../lib/reports';
 
 const latest = await getLatestReport();
+// The four cells shown on the home card, drawn from the canonical tear-sheet
+// rows so the labels and formatting stay in step with the report rail.
+const latestCells = latest
+  ? tearSheetRows(latest.data).filter((r) =>
+      ['rating', 'targetPrice', 'impliedReturn', 'method'].includes(r.key),
+    )
+  : [];
 const approach = [
   {
     title: 'Independent & conflict-free',
@@ -52,22 +59,12 @@ const approach = [
           <div class="ts-company serif-value">{latest.data.company}</div>
           <div class="ts-sub">{latest.data.coverageType} · {latest.data.sector}</div>
           <div class="ts-grid">
-            <div class="ts-cell br bb">
-              <div class="ts-k overline">Rating</div>
-              <div class="ts-v serif-value">{latest.data.rating}</div>
-            </div>
-            <div class="ts-cell bb">
-              <div class="ts-k overline">Target Price</div>
-              <div class="ts-v serif-value">{formatPrice(latest.data.targetPrice)}</div>
-            </div>
-            <div class="ts-cell br">
-              <div class="ts-k overline">Implied 12M</div>
-              <div class="ts-v serif-value">{formatPercent(impliedReturn(latest.data))}</div>
-            </div>
-            <div class="ts-cell">
-              <div class="ts-k overline">Method</div>
-              <div class="ts-v serif-value">{latest.data.method}</div>
-            </div>
+            {latestCells.map((cell, i) => (
+              <div class:list={['ts-cell', { br: i % 2 === 0, bb: i < 2 }]}>
+                <div class="ts-k overline">{cell.label}</div>
+                <div class="ts-v serif-value">{cell.value}</div>
+              </div>
+            ))}
           </div>
         </div>
         <span class="ts-foot">View full report <span class="ts-arrow">→</span></span>
