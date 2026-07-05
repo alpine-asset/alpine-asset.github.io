@@ -16,7 +16,7 @@
  * the build for an unrelated reason. Run it with `npm run verify:build` (which
  * builds first), or as part of `npm run verify`.
  */
-import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
