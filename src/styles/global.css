@@ -80,6 +80,7 @@ img { max-width: 100%; height: auto; display: block; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  font-family: inherit; /* so <button> elements match the <a> buttons */
   font-size: 14px;
   font-weight: 600;
   padding: 15px 28px;
@@ -89,6 +90,8 @@ img { max-width: 100%; height: auto; display: block; }
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   cursor: pointer;
 }
+/* Full-width, centered — for form submits and card-flush download buttons. */
+.btn--block { width: 100%; justify-content: center; }
 .btn--primary { background: var(--color-orange); color: #fff; }
 .btn--primary:hover { background: var(--color-orange-strong); }
 .btn--dark { background: var(--color-ink-deep); color: #fff; }
