@@ -8,18 +8,21 @@ import {
 
 describe('impliedReturn', () => {
   it('computes the fractional return from market price to target', () => {
-    expect(impliedReturn({ targetPrice: 110, marketPrice: 100 })).toBeCloseTo(0.1);
-    expect(impliedReturn({ targetPrice: 83.17, marketPrice: 86.12 })).toBeCloseTo(
-      -0.03425,
-      4,
+    expect(impliedReturn({ targetPrice: 110, marketPrice: 100 })).toBeCloseTo(
+      0.1,
     );
+    expect(
+      impliedReturn({ targetPrice: 83.17, marketPrice: 86.12 }),
+    ).toBeCloseTo(-0.03425, 4);
   });
 
   it('refuses a non-positive market price instead of returning Infinity/NaN', () => {
     // A zero market price would divide by zero and render "Infinity%" on the
     // live page — the schema blocks this, and so does the helper as a backstop.
     expect(() => impliedReturn({ targetPrice: 100, marketPrice: 0 })).toThrow();
-    expect(() => impliedReturn({ targetPrice: 100, marketPrice: -5 })).toThrow();
+    expect(() =>
+      impliedReturn({ targetPrice: 100, marketPrice: -5 }),
+    ).toThrow();
   });
 });
 

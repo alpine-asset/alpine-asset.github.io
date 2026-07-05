@@ -96,7 +96,7 @@ for (const file of htmlFiles) {
     if (/^(mailto:|tel:|javascript:|data:)/i.test(url)) continue;
     if (url.startsWith('#')) continue;
 
-    let pathToCheck = null;
+    let pathToCheck;
     if (url.startsWith('/')) {
       pathToCheck = url; // root-relative internal link/asset
     } else if (url.startsWith(SITE_ORIGIN)) {
@@ -108,7 +108,9 @@ for (const file of htmlFiles) {
     }
 
     if (!resolves(pathToCheck)) {
-      note(`Broken link on page ${prettyPage} → "${url}" (no such file in the built site).`);
+      note(
+        `Broken link on page ${prettyPage} → "${url}" (no such file in the built site).`,
+      );
     }
   }
 }
@@ -129,7 +131,9 @@ if (reportPages.length === 0) {
 
 // --- Report -----------------------------------------------------------------
 if (problems.length > 0) {
-  console.error(`\n✖ Build verification failed — ${problems.length} problem(s):\n`);
+  console.error(
+    `\n✖ Build verification failed — ${problems.length} problem(s):\n`,
+  );
   for (const p of problems) console.error(`   • ${p}`);
   console.error(
     '\nNothing was published. Fix the items above and run the check again.\n',

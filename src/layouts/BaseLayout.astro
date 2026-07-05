@@ -4,6 +4,18 @@
  * the shared Nav and Footer. Individual pages only supply their content.
  */
 import '../styles/global.css';
+// Self-hosted fonts (no external CDN). Only the weights the design uses are
+// imported, so the browser fetches them from our own origin with the CSS.
+import '@fontsource/source-serif-4/400.css';
+import '@fontsource/source-serif-4/500.css';
+import '@fontsource/source-serif-4/600.css';
+import '@fontsource/source-serif-4/700.css';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-sans/600.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/ibm-plex-mono/600.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
@@ -11,12 +23,29 @@ interface Props {
   title: string;
   description?: string;
   active?: 'home' | 'research' | 'about' | 'contact';
+  /** Absolute or root-relative image for social-share cards. */
+  image?: string;
 }
 const {
   title,
   description = 'Independent equity research on energy & utilities for institutional investors.',
   active = 'home',
+  image = '/og-default.png',
 } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+
+// Site-wide Organization structured data (helps search engines and LLMs).
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Alpine Asset Research Group',
+  url: Astro.site?.href,
+  description:
+    'Independent equity research on energy & utilities for institutional investors.',
+  email: 'eric.liu@alpine-asset.com',
+};
 ---
 
 <!doctype html>
@@ -27,11 +56,26 @@ const {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Social share (Open Graph + Twitter) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Alpine Asset Research Group" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <Nav active={active} />
-    <main>
+    <main id="main">
       <slot />
     </main>
     <Footer />

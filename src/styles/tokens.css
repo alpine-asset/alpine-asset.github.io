@@ -23,12 +23,15 @@
 
   /* ---- Surfaces ------------------------------------------------------- */
   --color-bg: #ffffff;
+  --color-white: #ffffff;          /* text on dark/accent + white card fills */
   --color-surface: #f9f8f6;        /* card headers */
   --color-surface-band: #f7f5f2;   /* full-width section band */
   --color-surface-hover: #fbf7f4;  /* subtle hover fill */
+  --color-orange-wash: #fbefe7;    /* faint orange fill (success check circle) */
 
   /* ---- Lines ---------------------------------------------------------- */
   --color-border: #e4e4e4;
+  --color-border-strong: #d3d6d8;  /* slightly darker hairline (nav CTA) */
   --color-border-soft: #eeece9;
   --color-border-band: #eceae6;
 
@@ -36,7 +39,9 @@
   --color-footer-bg: #1b2427;
   --color-footer-line: #33403f;
   --color-footer-text: #c4cbce;
+  --color-footer-soft: #939ea1;    /* dimmed footer body / secondary links */
   --color-footer-muted: #6e7b7e;
+  --color-footer-tag: #5a6669;     /* faint mono tag in the footer base */
   --color-footer-heading: #f2f5f5;
 
   /* ---- Semantic ------------------------------------------------------- */

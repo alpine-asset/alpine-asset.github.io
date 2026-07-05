@@ -5,8 +5,9 @@
 @import './tokens.css';
 @import './components.css';
 
-/* ---- Fonts ------------------------------------------------------------ */
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+/* Fonts are self-hosted (no external CDN dependency). The @fontsource weight
+   files are imported once in BaseLayout.astro so Astro bundles and fingerprints
+   the woff2 files from our own origin — see the imports there. */
 
 /* ---- Reset / base ----------------------------------------------------- */
 *,
@@ -34,6 +35,36 @@ body {
 
 a { color: inherit; }
 img { max-width: 100%; height: auto; display: block; }
+
+/* ---- Accessibility ---------------------------------------------------- */
+/* A single, consistent keyboard-focus ring for every interactive element.
+   Uses :focus-visible so it shows for keyboard/AT users without drawing a ring
+   on mouse click. Any component that sets `outline: none` must keep this. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-orange-strong);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip-to-content link: first focusable element on the page. Hidden until a
+   keyboard user tabs to it, then it slides into view so they can jump past the
+   nav straight to <main>. */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -48px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--color-ink-deep);
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 12px; }
 
 /* ---- Shared building blocks ------------------------------------------ */
 
@@ -92,12 +123,12 @@ img { max-width: 100%; height: auto; display: block; }
 }
 /* Full-width, centered — for form submits and card-flush download buttons. */
 .btn--block { width: 100%; justify-content: center; }
-.btn--primary { background: var(--color-orange); color: #fff; }
+.btn--primary { background: var(--color-orange); color: var(--color-white); }
 .btn--primary:hover { background: var(--color-orange-strong); }
-.btn--dark { background: var(--color-ink-deep); color: #fff; }
+.btn--dark { background: var(--color-ink-deep); color: var(--color-white); }
 .btn--dark:hover { background: var(--color-navy); }
 .btn--ghost {
-  background: #fff;
+  background: var(--color-white);
   color: var(--color-ink);
   border-color: var(--color-border);
 }
