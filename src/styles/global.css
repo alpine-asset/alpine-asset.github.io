@@ -37,7 +37,15 @@ img { max-width: 100%; height: auto; display: block; }
 /* ---- Shared building blocks ------------------------------------------ */
 
 /* Centered page container — replaces the repeated
-   `max-width:1200px;margin:0 auto;padding:0 40px` everywhere. */
+   `max-width:1200px;margin:0 auto;padding:0 40px` everywhere.
+   The side gutter lives here and ONLY here, so it stays consistent
+   site-wide (40px desktop / 24px phone, from --gutter).
+
+   Convention: sections that carry `.container` must set their own
+   vertical spacing with padding-top / padding-bottom ONLY — never the
+   `padding` shorthand. The shorthand writes all four sides and would
+   silently wipe the shared gutter, pushing text flush to the screen
+   edge on mobile. Keep horizontal padding out of page-level styles. */
 .container {
   max-width: var(--container);
   margin: 0 auto;
