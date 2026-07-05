@@ -1,0 +1,159 @@
+/*
+ * Shared component building blocks.
+ *
+ * These were extracted from the per-page <style> blocks, where the same
+ * visual patterns had been re-declared under different class names on each
+ * page (and had quietly drifted apart by a pixel here and there). Astro
+ * scopes a page's <style> to that page, so a plain class here has LOWER
+ * specificity than a page-scoped rule — which means a page can still add a
+ * scoped rule to tweak one value locally without fighting these defaults.
+ *
+ * Imported by global.css, so every page and component inherits it.
+ */
+
+/* ---- Overline / caption label ---------------------------------------- */
+/*
+ * The small uppercase mono label that recurred under ~14 names across the
+ * site (.ts-label, .stat-k, .fact-k, .detail-k, .col-head, .label, …).
+ * This carries only the three properties every copy shared; each use keeps
+ * its own font-size / letter-spacing / margin locally, so it stays neutral.
+ */
+.overline {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Mono label that sits above a block of content. Was copy-pasted verbatim
+   in about.astro and the report template. */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 24px;
+}
+
+/* ---- Section band (full-width tinted section) ------------------------ */
+/* The "Approach" (home) and "How the research is made" (about) sections
+   were the same component under different names — consolidated here. */
+.section-band {
+  background: var(--color-surface-band);
+  border-top: 1px solid var(--color-border-band);
+  border-bottom: 1px solid var(--color-border-band);
+}
+.section-band .container {
+  padding-top: 76px;
+  padding-bottom: 76px;
+}
+
+/* Serif heading at the top of a section band. Scoped to the band so it
+   outranks the `margin: 0` reset on the .h-display class it sits beside. */
+.section-band .section-h {
+  font-size: 34px;
+  letter-spacing: -0.6px;
+  line-height: 1.2;
+  margin: 0 0 52px;
+  max-width: 640px;
+}
+
+/* Three-up responsive grid (approach cards, process steps). */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+}
+
+/* A card inside .grid-3: serif title over soft body copy. */
+.feature-card h3 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin: 0 0 12px;
+}
+.feature-card p {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--color-text-softer);
+  margin: 0;
+}
+
+@media (max-width: 820px) {
+  .grid-3 { grid-template-columns: 1fr; gap: 36px; }
+}
+
+/* ---- CTA row --------------------------------------------------------- */
+/* The closing "get in touch" row shared verbatim by home and about. */
+.cta-row {
+  padding-top: 82px;
+  padding-bottom: 82px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.cta-h {
+  font-size: 32px;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* ---- Page intro header ----------------------------------------------- */
+/* Eyebrow + big serif heading + muted sub-paragraph that opens each
+   top-level page. Pages override font-size / max-width / spacing locally. */
+.page-header {
+  padding-top: 76px;
+  padding-bottom: 20px;
+}
+/* Scoped to .page-header so it outranks the `margin: 0` reset on the
+   .h-display class the title carries alongside it. */
+.page-header .page-title {
+  font-size: 46px;
+  margin-bottom: 20px;
+}
+.page-sub {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--color-text-soft);
+  margin: 0;
+}
+
+/* ---- Surfaces -------------------------------------------------------- */
+/* White bordered card with a hairline shadow — the tear sheet, the contact
+   form card, and the report rail card were all rolling their own copy. */
+.surface-card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(31, 36, 38, 0.04);
+}
+
+/* Header strip inside a card: tinted fill, ruled off, space-between.
+   Padding / corner radius stay local since they differ per card. */
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+/* ---- Inline value / ticker ------------------------------------------- */
+/* Serif, semibold, ink — the stat values and company names everywhere. */
+.serif-value {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* Mono ticker line: SYMBOL · EXCHANGE, in the accent orange. */
+.ticker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--color-orange-strong);
+}

@@ -27,22 +27,22 @@ const reasons = [
     <div>
       <p class="eyebrow">Contact</p>
       <h1 class="h-display heading">Let's talk.</h1>
-      <p class="sub">
+      <p class="sub page-sub">
         Whether you want a specific company covered, access to the underlying
         models, or a conversation about a role — reach out directly.
       </p>
 
       <div class="details">
         <div class="detail">
-          <div class="detail-k">Email</div>
-          <a class="detail-email" href={`mailto:${email}`}>{email}</a>
+          <div class="detail-k overline">Email</div>
+          <a class="detail-email serif-value" href={`mailto:${email}`}>{email}</a>
         </div>
         <div class="detail">
-          <div class="detail-k">Response time</div>
+          <div class="detail-k overline">Response time</div>
           <div class="detail-v">Typically within two business days.</div>
         </div>
         <div class="detail">
-          <div class="detail-k">Reach out about</div>
+          <div class="detail-k overline">Reach out about</div>
           <ul>
             <li>Requesting coverage of a company</li>
             <li>Access to reports &amp; underlying models</li>
@@ -54,33 +54,33 @@ const reasons = [
     </div>
 
     <!-- Right column: form -->
-    <div class="form-card">
+    <div class="form-card surface-card">
       <div id="form-view">
         <h2 class="form-title">Send a message</h2>
         <p class="form-note">Opens a pre-filled email — no account required.</p>
         <form id="contact-form" data-email={email}>
           <div class="grid2">
             <div class="field">
-              <label for="f-name">Name</label>
+              <label for="f-name" class="overline">Name</label>
               <input id="f-name" name="name" class="aa-input" placeholder="Jane Doe" />
             </div>
             <div class="field">
-              <label for="f-org">Organization</label>
+              <label for="f-org" class="overline">Organization</label>
               <input id="f-org" name="org" class="aa-input" placeholder="Firm / fund" />
             </div>
           </div>
           <div class="field">
-            <label for="f-email">Your email</label>
+            <label for="f-email" class="overline">Your email</label>
             <input id="f-email" name="email" type="email" class="aa-input" placeholder="you@firm.com" />
           </div>
           <div class="field">
-            <label for="f-reason">Reason</label>
+            <label for="f-reason" class="overline">Reason</label>
             <select id="f-reason" name="reason" class="aa-input select">
               {reasons.map((r) => <option>{r}</option>)}
             </select>
           </div>
           <div class="field">
-            <label for="f-message">Message</label>
+            <label for="f-message" class="overline">Message</label>
             <textarea id="f-message" name="message" class="aa-input" rows="5" placeholder="A few lines about what you're looking for…"></textarea>
           </div>
           <button type="submit" class="submit">Compose email →</button>
@@ -134,22 +134,24 @@ const reasons = [
 <style>
   .wrap { padding-top: 76px; padding-bottom: 96px; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 80px; align-items: start; }
   .heading { font-size: 44px; margin-bottom: 20px; }
-  .sub { font-size: 17px; line-height: 1.65; color: var(--color-text-soft); margin: 0 0 40px; max-width: 420px; }
+  /* .sub uses shared .page-sub; this page keeps a tighter line and its own width. */
+  .sub { line-height: 1.65; margin: 0 0 40px; max-width: 420px; }
 
   .details { border-top: 1px solid var(--color-border-band); }
   .detail { padding: 18px 0; border-bottom: 1px solid var(--color-border-band); }
-  .detail-k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 8px; }
-  .detail-email { font-family: var(--font-serif); font-size: 19px; color: var(--color-ink); text-decoration: none; font-weight: 600; }
+  .detail-k { font-size: 10px; letter-spacing: 1.6px; margin-bottom: 8px; }
+  .detail-email { font-size: 19px; text-decoration: none; }
   .detail-email:hover { color: var(--color-orange-strong); }
   .detail-v { font-size: 15.5px; color: var(--color-text-softer); }
   .detail ul { margin: 0; padding-left: 18px; color: var(--color-text-softer); font-size: 15px; line-height: 1.8; }
 
-  .form-card { border: 1px solid var(--color-border); border-radius: 3px; padding: 36px 36px 40px; background: #fff; box-shadow: 0 1px 2px rgba(31, 36, 38, 0.04); }
+  /* .form-card uses shared .surface-card; only padding is local. */
+  .form-card { padding: 36px 36px 40px; }
   .form-title { font-family: var(--font-serif); font-size: 22px; font-weight: 600; color: var(--color-ink); margin: 0 0 4px; }
   .form-note { font-size: 13.5px; color: var(--color-muted); margin: 0 0 26px; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .field { margin-bottom: 16px; }
-  .field label { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 8px; }
+  .field label { display: block; font-size: 10px; letter-spacing: 1px; margin-bottom: 8px; }
 
   .aa-input {
     width: 100%;

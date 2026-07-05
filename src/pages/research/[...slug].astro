@@ -43,8 +43,8 @@ function monthYear(date: Date): string {
 
     <article class="body">
       <div class="tags">
-        <span class="tag">{data.coverageType}</span>
-        <span class="tag">{data.sector}</span>
+        <span class="tag overline">{data.coverageType}</span>
+        <span class="tag overline">{data.sector}</span>
       </div>
       <h1 class="h-display title">{data.company} — {data.rating}, {data.method} basis</h1>
 
@@ -111,11 +111,8 @@ function monthYear(date: Date): string {
   }
   .tags { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
   .tag {
-    font-family: var(--font-mono);
     font-size: 10px;
     letter-spacing: 1.4px;
-    text-transform: uppercase;
-    color: var(--color-muted);
     border: 1px solid var(--color-border);
     padding: 5px 10px;
     border-radius: 2px;
@@ -124,14 +121,7 @@ function monthYear(date: Date): string {
   .lead { font-size: 17px; line-height: 1.72; color: var(--color-text); margin: 0; }
   .divider { border: none; border-top: 1px solid var(--color-border-band); margin: 34px 0; }
 
-  .section-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--color-muted);
-    margin-bottom: 26px;
-  }
+  /* .section-label is shared (components.css). */
   .thesis { display: flex; flex-direction: column; gap: 26px; margin-bottom: 38px; }
   .thesis-item { display: grid; grid-template-columns: 34px 1fr; gap: 20px; align-items: start; }
   .num { font-family: var(--font-serif); font-size: 20px; font-weight: 600; color: var(--color-orange); }
