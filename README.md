@@ -61,7 +61,3 @@ Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the site
 and publishes it to GitHub Pages. To enable it, set the repository's **Pages
 source** to **GitHub Actions** (Settings → Pages). The custom domain is kept in
 `public/CNAME`.
-
-> The legacy Claude Design site still lives in `docs/` for reference during the
-> migration. Once this site is live, that folder and the old Pages
-> "deploy-from-branch" setting can be removed.
