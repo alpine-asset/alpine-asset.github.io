@@ -9,6 +9,12 @@ on:
   push:
     branches-ignore: [main]
 
+# Least privilege: this workflow only reads the checked-out code. Being
+# explicit means a compromised or over-eager action can't use the job's token
+# to write to the repo, regardless of the repository's default token setting.
+permissions:
+  contents: read
+
 jobs:
   verify:
     runs-on: ubuntu-latest

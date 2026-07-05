@@ -5,6 +5,9 @@ site deployed to GitHub Pages at [alpine-asset.com](https://alpine-asset.com).
 
 > **Publishing a report?** See **[AUTHORING.md](./AUTHORING.md)** — you only need
 > to write one Markdown file, no code.
+>
+> **Maintaining the code?** See **[BEST_PRACTICES.md](./BEST_PRACTICES.md)** — a
+> standing tech-debt audit and prioritized backlog for keeping quality high.
 
 ## Why Astro
 

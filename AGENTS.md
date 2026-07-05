@@ -8,6 +8,9 @@ file points to them instead of repeating them:
   layout, local dev, deployment.
 - **[AUTHORING.md](./AUTHORING.md)** — how a non-technical author publishes a
   report (the common request). Read this before touching `src/content/reports/`.
+- **[BEST_PRACTICES.md](./BEST_PRACTICES.md)** — standing tech-debt/best-practice
+  audit and prioritized backlog. Check it before adding tooling or gates so you
+  build on the plan instead of relitigating it.
 
 ## What this is
 
