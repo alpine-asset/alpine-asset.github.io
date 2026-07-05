@@ -1,0 +1,37 @@
+name: CI
+
+# Runs on every pull request and on every branch push that is NOT main
+# (pushes to main are handled by deploy.yml, which runs the same checks).
+# This is the green ✓ / red ✗ you see on a pull request BEFORE merging it:
+# if it is red, do not merge — the site would break or fail to publish.
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+
+      # 1. Type-check pages and validate every report's fields (the frontmatter).
+      - name: Check types & report fields
+        run: npm run check
+
+      # 2. Unit-test the price/percentage/date helpers.
+      - name: Run unit tests
+        run: npm test
+
+      # 3. Build the site, then verify every link, PDF, and image resolves
+      #    and that all expected pages exist.
+      - name: Build & verify the site
+        run: npm run verify:build

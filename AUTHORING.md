@@ -79,8 +79,11 @@ A normal paragraph. Make text **bold** with two stars, or *italic* with one.
 ## Things to know
 
 - **The numbers are checked for you.** If you forget the target price or misspell
-  the rating (e.g. `Buyy`), the site won't publish and will tell you exactly
-  what's wrong — it can't silently ship a broken page.
+  the rating (e.g. `Buyy`), or leave a `$` in a price, the site won't publish and
+  will tell you exactly what's wrong — it can't silently ship a broken page.
+- **The PDF is checked too.** If the `pdf:` line points at a file that isn't in
+  `public/reports/` (a typo, or you forgot to add it), the checks fail before the
+  site publishes — so the "Download PDF" button can never lead to a dead link.
 - **"Implied 12M" is calculated automatically** from the target and market
   prices. You never type it, so it can never disagree with the prices shown.
 - **The newest report** (by `date`) automatically becomes the "Latest Coverage"

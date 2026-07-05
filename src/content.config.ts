@@ -30,15 +30,35 @@ const reports = defineCollection({
       'Underweight',
       'Sell',
     ]),
-    targetPrice: z.number(),
-    marketPrice: z.number(),
+    // Prices must be positive numbers with no "$". A zero or negative
+    // marketPrice would make the "Implied 12M" figure meaningless (it divides
+    // by the market price), so we reject it here with a clear message rather
+    // than shipping "Infinity%" to the live page.
+    targetPrice: z
+      .number({ message: 'targetPrice must be a number with no "$" or commas.' })
+      .positive('targetPrice must be greater than 0.'),
+    marketPrice: z
+      .number({ message: 'marketPrice must be a number with no "$" or commas.' })
+      .positive('marketPrice must be greater than 0.'),
     marketCap: z.string().optional(),
     method: z.string().default('SOTP'),
 
     // --- Publishing ---
     date: z.date(),
-    pdf: z.string(),
-    pdfPages: z.number().optional(),
+    // The PDF path must point inside /reports/ and end in .pdf. This catches a
+    // typo in the path shape at build time; that the file actually EXISTS is
+    // checked after the build by scripts/verify-build.mjs.
+    pdf: z
+      .string()
+      .regex(
+        /^\/reports\/[^\s]+\.pdf$/i,
+        'pdf must look like /reports/your-file-name.pdf (the file goes in public/reports/).',
+      ),
+    pdfPages: z
+      .number()
+      .int('pdfPages must be a whole number.')
+      .positive('pdfPages must be greater than 0.')
+      .optional(),
     dataSource: z.string().default('Bloomberg data · Alpine 3-statement model'),
     draft: z.boolean().default(false),
 
