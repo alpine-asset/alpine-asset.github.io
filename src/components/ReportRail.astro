@@ -22,19 +22,19 @@ const rows: Array<[string, string]> = [
 ---
 
 <aside class="rail">
-  <div class="card">
+  <div class="card surface-card">
     <div class="card-head">
-      <span class="label">Tear Sheet</span>
-      <span class="label">{formatDate(data.date, true)}</span>
+      <span class="label overline">Tear Sheet</span>
+      <span class="label overline">{formatDate(data.date, true)}</span>
     </div>
     <div class="card-body">
       <div class="ticker">{data.ticker} · {data.exchange}</div>
-      <div class="company">{data.company}</div>
+      <div class="company serif-value">{data.company}</div>
       <div class="rows">
         {rows.map(([k, v]) => (
           <div class="row">
             <span class="row-k">{k}</span>
-            <span class="row-v">{v}</span>
+            <span class="row-v serif-value">{v}</span>
           </div>
         ))}
       </div>
@@ -51,37 +51,15 @@ const rows: Array<[string, string]> = [
 
 <style>
   .rail { align-self: start; position: sticky; top: 32px; }
-  .card { border: 1px solid var(--color-border); border-radius: 3px; overflow: hidden; }
-  .card-head {
-    background: var(--color-surface);
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--color-border-soft);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-    color: var(--color-muted);
-  }
+  /* .card uses shared .surface-card; the rail clips its flush download button. */
+  .card { overflow: hidden; }
+  /* .card-head shared (components.css); only padding is local. */
+  .card-head { padding: 14px 20px; }
+  .label { font-size: 10px; letter-spacing: 1.6px; }
   .card-body { padding: 20px; }
-  .ticker {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 1px;
-    color: var(--color-orange-strong);
-    margin-bottom: 5px;
-  }
-  .company {
-    font-family: var(--font-serif);
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--color-ink);
-    margin-bottom: 20px;
-  }
+  /* .ticker shared; .company / .row-v use .serif-value. */
+  .ticker { margin-bottom: 5px; }
+  .company { font-size: 22px; margin-bottom: 20px; }
   .rows { display: flex; flex-direction: column; }
   .row {
     display: flex;
@@ -91,7 +69,7 @@ const rows: Array<[string, string]> = [
   }
   .row:last-child { border-bottom: 1px solid var(--color-border-soft); }
   .row-k { font-size: 12.5px; color: var(--color-muted); }
-  .row-v { font-family: var(--font-serif); font-size: 14px; font-weight: 600; color: var(--color-ink); }
+  .row-v { font-size: 14px; }
   .download {
     display: flex;
     align-items: center;

@@ -14,10 +14,10 @@ const reports = await getPublishedReports();
   description="Initiation reports and ongoing analysis across the energy & utilities sector."
   active="research"
 >
-  <section class="container header">
+  <section class="container header page-header">
     <p class="eyebrow">Research</p>
-    <h1 class="h-display heading">Published coverage</h1>
-    <p class="sub">
+    <h1 class="h-display heading page-title">Published coverage</h1>
+    <p class="sub page-sub">
       Initiation reports and ongoing analysis across the energy &amp; utilities
       sector. Each report ships with the full three-statement model behind it.
     </p>
@@ -29,22 +29,22 @@ const reports = await getPublishedReports();
       return (
         <a class="row" href={`/research/${report.id}/`}>
           <div class="row-main">
-            <div class="row-ticker">{d.ticker} · {d.exchange}</div>
-            <h2 class="row-company">{d.company}</h2>
+            <div class="row-ticker ticker">{d.ticker} · {d.exchange}</div>
+            <h2 class="row-company serif-value">{d.company}</h2>
             <p class="row-sector">{d.coverageType} · {d.sector}</p>
           </div>
           <div class="row-stats">
             <div class="stat">
-              <span class="stat-k">Rating</span>
-              <span class="stat-v">{d.rating}</span>
+              <span class="stat-k overline">Rating</span>
+              <span class="stat-v serif-value">{d.rating}</span>
             </div>
             <div class="stat">
-              <span class="stat-k">Target</span>
-              <span class="stat-v">{formatPrice(d.targetPrice)}</span>
+              <span class="stat-k overline">Target</span>
+              <span class="stat-v serif-value">{formatPrice(d.targetPrice)}</span>
             </div>
             <div class="stat">
-              <span class="stat-k">Implied 12M</span>
-              <span class="stat-v">{formatPercent(impliedReturn(d))}</span>
+              <span class="stat-k overline">Implied 12M</span>
+              <span class="stat-v serif-value">{formatPercent(impliedReturn(d))}</span>
             </div>
           </div>
           <div class="row-meta">
@@ -68,9 +68,10 @@ const reports = await getPublishedReports();
 </BaseLayout>
 
 <style>
-  .header { padding-top: 76px; padding-bottom: 44px; border-bottom: 1px solid var(--color-border-band); }
-  .header .heading { font-size: 46px; margin-bottom: 20px; max-width: 760px; }
-  .sub { font-size: 17px; line-height: 1.6; color: var(--color-text-soft); margin: 0; max-width: 600px; }
+  /* Header uses shared .page-header / .page-title / .page-sub. */
+  .header { padding-bottom: 44px; border-bottom: 1px solid var(--color-border-band); }
+  .heading { max-width: 760px; }
+  .sub { max-width: 600px; }
 
   .list { padding-top: 40px; padding-bottom: 8px; display: flex; flex-direction: column; }
   .row {
@@ -85,26 +86,14 @@ const reports = await getPublishedReports();
     transition: opacity 0.15s ease;
   }
   .row:hover { opacity: 0.72; }
-  .row-ticker {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 1px;
-    color: var(--color-orange-strong);
-    margin-bottom: 6px;
-  }
-  .row-company { font-family: var(--font-serif); font-size: 24px; font-weight: 600; color: var(--color-ink); margin: 0 0 6px; }
+  .row-ticker { margin-bottom: 6px; }
+  .row-company { font-size: 24px; margin: 0 0 6px; }
   .row-sector { font-size: 13.5px; color: var(--color-muted); margin: 0; }
 
   .row-stats { display: flex; gap: 40px; }
   .stat { display: flex; flex-direction: column; gap: 5px; }
-  .stat-k {
-    font-family: var(--font-mono);
-    font-size: 9.5px;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: var(--color-muted);
-  }
-  .stat-v { font-family: var(--font-serif); font-size: 18px; font-weight: 600; color: var(--color-ink); }
+  .stat-k { font-size: 9.5px; letter-spacing: 1.2px; }
+  .stat-v { font-size: 18px; }
 
   .row-meta { display: flex; align-items: center; gap: 18px; }
   .date { font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; color: var(--color-muted); }
