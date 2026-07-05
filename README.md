@@ -53,7 +53,34 @@ npm install     # once
 npm run dev      # local preview at http://localhost:4321
 npm run build    # production build into dist/
 npm run check    # type-check + validate all report frontmatter
+npm test         # unit-test the price/percent/date helpers
+npm run verify   # run EVERYTHING below in one go — the "is it safe?" command
 ```
+
+## Automated safety net
+
+The point of these checks is that a change either passes them all or it does not
+ship — there is no in-between where the site quietly breaks. Run `npm run verify`
+locally, or just watch the green ✓ / red ✗ on the pull request. **Red means do
+not merge.** The layers are:
+
+1. **`npm run check`** — type-checks the pages and validates every report's
+   fields against the schema in `src/content.config.ts`. A misspelled rating,
+   a missing target price, a `$` left in a number, or a zero/negative price all
+   fail here with a message naming the exact field.
+2. **`npm test`** ([Vitest](https://vitest.dev)) — unit tests for the
+   price/percentage/date helpers in `src/lib/format.ts`, including the
+   divide-by-zero guard behind the "Implied 12M" figure.
+3. **`scripts/verify-build.mjs`** (runs inside `npm run verify:build`) — builds
+   the site, then checks the finished pages: every link, **every PDF download**,
+   and every image must point at a file that actually exists, and the core pages
+   (Home, Research, About, Contact) must all be present. This is what catches a
+   report that references a PDF nobody uploaded, or a renamed page that leaves
+   dead links behind.
+
+CI runs all three on every pull request (`.github/workflows/ci.yml`) and again
+before every deploy (`.github/workflows/deploy.yml`), so a broken change can
+never publish — if a check fails, the last good version of the site stays live.
 
 ## Deployment
 
