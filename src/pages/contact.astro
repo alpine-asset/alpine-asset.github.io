@@ -159,12 +159,14 @@ const reasons = [
     font-family: var(--font-sans);
     font-size: 15px;
     color: var(--color-ink);
-    background: #fff;
+    background: var(--color-white);
     border: 1px solid var(--color-border);
     border-radius: 2px;
     padding: 12px 14px;
   }
-  .aa-input:focus { outline: none; border-color: var(--color-orange); }
+  /* Accent the border on focus; the visible keyboard focus ring is provided
+     globally by :focus-visible in global.css (never stripped here). */
+  .aa-input:focus { border-color: var(--color-orange); }
   .aa-input::placeholder { color: var(--color-muted-soft); }
   textarea.aa-input { resize: vertical; min-height: 110px; }
   .select {
@@ -179,7 +181,7 @@ const reasons = [
   .submit { margin-top: 8px; }
 
   .sent { text-align: center; padding: 40px 10px; }
-  .check { width: 52px; height: 52px; border-radius: 50%; background: #fbefe7; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; }
+  .check { width: 52px; height: 52px; border-radius: 50%; background: var(--color-orange-wash); display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; }
   .sent h3 { font-family: var(--font-serif); font-size: 22px; font-weight: 600; color: var(--color-ink); margin: 0 0 10px; }
   .sent p { font-size: 15px; line-height: 1.6; color: var(--color-text-softer); margin: 0 auto 24px; max-width: 340px; }
   .sent button { background: none; border: none; color: var(--color-orange-strong); font-family: var(--font-sans); font-size: 14px; font-weight: 600; cursor: pointer; }

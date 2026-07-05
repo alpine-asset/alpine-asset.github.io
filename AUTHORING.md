@@ -37,6 +37,7 @@ method: SOTP                       # Valuation method
 date: 2026-08-15                   # Year-Month-Day
 pdf: /reports/duke-energy-2026.pdf # Must match the file you put in public/reports/
 pdfPages: 18
+dataSource: Bloomberg data · Alpine 3-statement model  # Optional; this is the default
 
 summary: >
   One or two sentences that appear as the lead paragraph. You can make a word

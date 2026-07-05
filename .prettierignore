@@ -1,0 +1,21 @@
+# Generated / vendored
+dist/
+.astro/
+node_modules/
+package-lock.json
+
+# Intentionally NOT formatted by Prettier:
+#
+#   *.css and *.astro <style> blocks are written in a deliberate compact style
+#   (several related declarations per line, e.g.
+#   `.headline { font-size: 56px; line-height: 1.08; }`). Prettier forces one
+#   declaration per line, which would reflow every rule in the codebase and
+#   fight the maintainers' chosen layout. Colour/token discipline in these
+#   files is enforced by Stylelint instead (see .stylelintrc.json).
+*.css
+*.astro
+#
+#   *.md docs (README, AUTHORING, AGENTS, this audit) are hand-formatted with
+#   aligned comment columns and tables tuned for non-technical authors; leave
+#   them to human editing rather than machine reflow.
+*.md

@@ -8,6 +8,9 @@ file points to them instead of repeating them:
   layout, local dev, deployment.
 - **[AUTHORING.md](./AUTHORING.md)** — how a non-technical author publishes a
   report (the common request). Read this before touching `src/content/reports/`.
+- **[BEST_PRACTICES.md](./BEST_PRACTICES.md)** — standing tech-debt/best-practice
+  audit and prioritized backlog. Check it before adding tooling or gates so you
+  build on the plan instead of relitigating it.
 
 ## What this is
 
@@ -24,8 +27,11 @@ Node **24.18.0** (`.nvmrc`, enforced in CI). Run `npm install` once.
 | `npm run dev` | Local preview at http://localhost:4321 |
 | `npm run build` | Production build into `dist/` |
 | `npm run check` | Type-check **and** validate every report's frontmatter. Run it after any change to content, schema, or `.astro` files. |
-| `npm test` | Unit tests (Vitest) for the price/percent/date helpers in `src/lib/format.ts`. |
-| `npm run verify` | **The full gate CI relies on:** `check` + `test` + build + `scripts/verify-build.mjs` (which confirms every link, PDF, and image in the built site resolves). Run this before finishing. |
+| `npm run lint` | ESLint over the pages, components, and libs. |
+| `npm run lint:css` | Stylelint — **enforces the "no hard-coded colour" rule** (hex colours are only allowed in `tokens.css`). |
+| `npm run format` | Prettier-format the TS/JS/JSON/YAML surface. (`.astro`/`.css` are intentionally hand-formatted — see `.prettierignore`.) |
+| `npm test` | Unit tests (Vitest) for the pure helpers in `src/lib/` (formatting, report ordering/visibility, inline-Markdown escaping). |
+| `npm run verify` | **The full gate CI relies on:** `format:check` + `lint` + `lint:css` + `check` + `test` + build + `scripts/verify-build.mjs` (which confirms every link, PDF, and image in the built site resolves). Run this before finishing. |
 
 The safety net is layered so a broken change fails loudly instead of shipping:
 the schema rejects bad frontmatter, Vitest covers the helpers, and
@@ -57,7 +63,9 @@ tests/                       Vitest unit tests for src/lib/format.ts
 
 - **Never hard-code a colour, font, or spacing value in a page or component.**
   Add or reuse a token in `src/styles/tokens.css`. Shared rules belong in
-  `styles/components.css`, not copied per page.
+  `styles/components.css`, not copied per page. The colour half of this is now
+  **enforced by Stylelint** (`npm run lint:css`): a hex value anywhere outside
+  `tokens.css` fails the build.
 - **Reports are data, not code.** Adding/editing a report means editing one
   `.md` file under `src/content/reports/` plus its PDF in `public/reports/`.
   Don't build report HTML by hand — the tear sheet, listing, and home card are

@@ -5,6 +5,9 @@ site deployed to GitHub Pages at [alpine-asset.com](https://alpine-asset.com).
 
 > **Publishing a report?** See **[AUTHORING.md](./AUTHORING.md)** — you only need
 > to write one Markdown file, no code.
+>
+> **Maintaining the code?** See **[BEST_PRACTICES.md](./BEST_PRACTICES.md)** — a
+> standing tech-debt audit and prioritized backlog for keeping quality high.
 
 ## Why Astro
 
@@ -22,7 +25,8 @@ This project replaces that with a conventional static site:
   tear sheet, research index, and home-page card are all generated from those
   fields. A non-technical author never touches HTML.
 - **Plain static HTML out** — great SEO, no client-side runtime, no external CDN
-  dependency.
+  dependency (fonts are self-hosted via `@fontsource`; a sitemap and Open Graph
+  tags ship for search and social).
 
 ## Project layout
 
@@ -51,9 +55,10 @@ public/                    Static files served as-is: CNAME, PDFs, images, favic
 ```bash
 npm install     # once
 npm run dev      # local preview at http://localhost:4321
-npm run build    # production build into dist/
 npm run check    # type-check + validate all report frontmatter
-npm test         # unit-test the price/percent/date helpers
+npm run lint     # ESLint (JS/TS/Astro)
+npm run lint:css # Stylelint — enforces the "no hard-coded colour" rule
+npm test         # unit-test the pure helpers in src/lib/
 npm run verify   # run EVERYTHING below in one go — the "is it safe?" command
 ```
 
@@ -64,21 +69,26 @@ ship — there is no in-between where the site quietly breaks. Run `npm run veri
 locally, or just watch the green ✓ / red ✗ on the pull request. **Red means do
 not merge.** The layers are:
 
-1. **`npm run check`** — type-checks the pages and validates every report's
+1. **Format & lint** — Prettier (`format:check`), ESLint (`lint`), and Stylelint
+   (`lint:css`). Stylelint is what keeps the design-token promise honest: a
+   hard-coded hex colour anywhere outside `src/styles/tokens.css` fails the
+   build.
+2. **`npm run check`** — type-checks the pages and validates every report's
    fields against the schema in `src/content.config.ts`. A misspelled rating,
    a missing target price, a `$` left in a number, or a zero/negative price all
    fail here with a message naming the exact field.
-2. **`npm test`** ([Vitest](https://vitest.dev)) — unit tests for the
-   price/percentage/date helpers in `src/lib/format.ts`, including the
-   divide-by-zero guard behind the "Implied 12M" figure.
-3. **`scripts/verify-build.mjs`** (runs inside `npm run verify:build`) — builds
+3. **`npm test`** ([Vitest](https://vitest.dev)) — unit tests for the pure
+   helpers in `src/lib/`: price/percentage/date formatting (including the
+   divide-by-zero guard behind the "Implied 12M" figure), report
+   ordering/draft-visibility, and the inline-Markdown escaper.
+4. **`scripts/verify-build.mjs`** (runs inside `npm run verify:build`) — builds
    the site, then checks the finished pages: every link, **every PDF download**,
    and every image must point at a file that actually exists, and the core pages
    (Home, Research, About, Contact) must all be present. This is what catches a
    report that references a PDF nobody uploaded, or a renamed page that leaves
    dead links behind.
 
-CI runs all three on every pull request (`.github/workflows/ci.yml`) and again
+CI runs all of these on every pull request (`.github/workflows/ci.yml`) and again
 before every deploy (`.github/workflows/deploy.yml`), so a broken change can
 never publish — if a check fails, the last good version of the site stays live.
 

@@ -7,6 +7,7 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ReportRail from '../../components/ReportRail.astro';
 import { getPublishedReports } from '../../lib/reports';
+import { renderInlineBold } from '../../lib/markdown';
 
 export async function getStaticPaths() {
   const reports = await getPublishedReports();
@@ -20,14 +21,6 @@ const { report } = Astro.props;
 const { data } = report;
 const { Content } = await render(report);
 
-/** Minimal inline Markdown for the lead paragraph: **bold** only. */
-function renderInline(md: string): string {
-  return md
-    .trim()
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-}
 function monthYear(date: Date): string {
   return date.toLocaleString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
 }
@@ -48,7 +41,7 @@ function monthYear(date: Date): string {
       </div>
       <h1 class="h-display title">{data.company} — {data.rating}, {data.method} basis</h1>
 
-      <p class="lead" set:html={renderInline(data.summary)}></p>
+      <p class="lead" set:html={renderInlineBold(data.summary)}></p>
 
       <hr class="divider" />
 

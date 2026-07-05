@@ -1,0 +1,20 @@
+{
+  "rules": {
+    "color-no-hex": [
+      true,
+      {
+        "message": "Use a design token from src/styles/tokens.css instead of a hard-coded hex colour (see AGENTS.md)."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/styles/tokens.css"],
+      "rules": { "color-no-hex": null }
+    },
+    {
+      "files": ["**/*.astro"],
+      "customSyntax": "postcss-html"
+    }
+  ]
+}

@@ -28,17 +28,12 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      # Type-check + validate report fields, then unit-test the helpers. If
-      # either fails the site is NOT published and the last good version stays
-      # live — a broken change can never take the site down.
-      - name: Check types & report fields
-        run: npm run check
-      - name: Run unit tests
-        run: npm test
-      # Build the site and verify every link, PDF, and image resolves before
-      # publishing.
-      - name: Build & verify site
-        run: npm run verify:build
+      # The same full gate CI runs (format, lint, token check, types, tests,
+      # build, link check), defined once in package.json's `verify` script. If
+      # any layer fails the site is NOT published and the last good version
+      # stays live — a broken change can never take the site down.
+      - name: Verify
+        run: npm run verify
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

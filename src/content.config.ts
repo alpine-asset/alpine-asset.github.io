@@ -35,10 +35,14 @@ const reports = defineCollection({
     // by the market price), so we reject it here with a clear message rather
     // than shipping "Infinity%" to the live page.
     targetPrice: z
-      .number({ message: 'targetPrice must be a number with no "$" or commas.' })
+      .number({
+        message: 'targetPrice must be a number with no "$" or commas.',
+      })
       .positive('targetPrice must be greater than 0.'),
     marketPrice: z
-      .number({ message: 'marketPrice must be a number with no "$" or commas.' })
+      .number({
+        message: 'marketPrice must be a number with no "$" or commas.',
+      })
       .positive('marketPrice must be greater than 0.'),
     marketCap: z.string().optional(),
     method: z.string().default('SOTP'),

@@ -5,7 +5,15 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: 'npm' # See documentation for possible values
+    directory: '/' # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
+
+  # GitHub Actions in .github/workflows are dependencies too: an unpatched or
+  # compromised action version is a supply-chain risk. Dependabot keeps the
+  # `uses:` pins (actions/checkout, setup-node, deploy-pages, …) current.
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
