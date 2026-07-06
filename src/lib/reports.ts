@@ -11,7 +11,9 @@ export {
   formatPercent,
   formatPrice,
   formatDate,
+  formatMonthYear,
 } from './format';
+export { tearSheetRows } from './tear-sheet';
 export { sortByDateDesc, selectVisible } from './reports-core';
 
 /** Published reports, newest first. Drafts are hidden in production builds. */

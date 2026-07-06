@@ -3,8 +3,11 @@
  * Site footer. Ported from the old Footer.dc.html.
  * The copyright year is derived at build time — never hand-edited.
  */
+import BrandMark from './BrandMark.astro';
+import { SITE_EMAIL, SITE_NAME } from '../lib/site';
+
 const year = new Date().getFullYear();
-const email = 'eric.liu@alpine-asset.com';
+const email = SITE_EMAIL;
 ---
 
 <footer class="site-footer">
@@ -12,10 +15,7 @@ const email = 'eric.liu@alpine-asset.com';
     <div class="top">
       <div class="blurb">
         <div class="brand">
-          <svg width="28" height="28" viewBox="0 0 30 30" fill="none" aria-hidden="true">
-            <path d="M2 25 L11 8 L15.5 16 L18.5 11 L28 25 Z" fill="#E4E9EA" />
-            <path d="M11 8 L15.5 16 L12.5 16 L9.5 11 Z" fill="#E97132" />
-          </svg>
+          <BrandMark size={28} />
           <span class="brand-name">Alpine Asset</span>
         </div>
         <p>
@@ -46,7 +46,7 @@ const email = 'eric.liu@alpine-asset.com';
 
     <div class="bottom">
       <p class="legal">
-        © {year} Alpine Asset Research Group. Research is provided for
+        © {year} {SITE_NAME}. Research is provided for
         informational purposes only and does not constitute investment advice, an
         offer, or a solicitation to buy or sell any security. Views expressed
         reflect the analyst's personal opinions as of the publication date.
@@ -73,13 +73,10 @@ const email = 'eric.liu@alpine-asset.com';
     border-bottom: 1px solid var(--color-footer-line);
   }
   .blurb { max-width: 360px; }
-  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-  .brand-name {
-    font-family: var(--font-serif);
-    font-weight: 600;
-    font-size: 19px;
-    color: var(--color-footer-heading);
-  }
+  /* `color` here tints the BrandMark's base facet (currentColor). */
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; color: var(--color-footer-mark); }
+  /* .brand-name shares font/weight/size via components.css; only colour is local. */
+  .brand-name { color: var(--color-footer-heading); }
   .blurb p { font-size: 14px; line-height: 1.65; color: var(--color-footer-soft); margin: 0; }
 
   .cols { display: flex; gap: 72px; flex-wrap: wrap; }

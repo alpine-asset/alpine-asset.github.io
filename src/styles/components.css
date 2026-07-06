@@ -157,3 +157,13 @@
   letter-spacing: 1px;
   color: var(--color-orange-strong);
 }
+
+/* ---- Brand wordmark -------------------------------------------------- */
+/* The "Alpine Asset" wordmark beside the logo. Shared by the nav and the
+   footer, which previously re-declared this identically; each keeps only its
+   own colour (and the nav its tighter letter-spacing) locally. */
+.brand-name {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 19px;
+}

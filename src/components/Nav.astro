@@ -8,6 +8,8 @@ interface Props {
 }
 const { active = 'home' } = Astro.props;
 
+import BrandMark from './BrandMark.astro';
+
 const links = [
   { key: 'home', label: 'Home', href: '/' },
   { key: 'research', label: 'Research', href: '/research/' },
@@ -18,10 +20,7 @@ const links = [
 <header class="site-header">
   <div class="container bar">
     <a href="/" class="brand" aria-label="Alpine Asset — home">
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
-        <path d="M2 25 L11 8 L15.5 16 L18.5 11 L28 25 Z" fill="#233C43" />
-        <path d="M11 8 L15.5 16 L12.5 16 L9.5 11 Z" fill="#E97132" />
-      </svg>
+      <BrandMark size={30} />
       <span class="brand-text">
         <span class="brand-name">Alpine Asset</span>
         <span class="brand-sub">RESEARCH GROUP</span>
@@ -49,15 +48,12 @@ const links = [
     align-items: center;
     justify-content: space-between;
   }
-  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  /* `color` here tints the BrandMark's base facet (currentColor). */
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--color-navy); }
   .brand-text { display: flex; flex-direction: column; line-height: 1; }
-  .brand-name {
-    font-family: var(--font-serif);
-    font-weight: 600;
-    font-size: 19px;
-    color: var(--color-ink);
-    letter-spacing: -0.2px;
-  }
+  /* .brand-name shares font/weight/size via components.css; only colour and the
+     nav's tighter tracking are local. */
+  .brand-name { color: var(--color-ink); letter-spacing: -0.2px; }
   .brand-sub {
     font-family: var(--font-mono);
     font-size: 9px;

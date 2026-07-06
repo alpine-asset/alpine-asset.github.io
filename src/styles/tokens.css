@@ -43,6 +43,7 @@
   --color-footer-muted: #6e7b7e;
   --color-footer-tag: #5a6669;     /* faint mono tag in the footer base */
   --color-footer-heading: #f2f5f5;
+  --color-footer-mark: #e4e9ea;    /* logo base facet on the dark footer */
 
   /* ---- Semantic ------------------------------------------------------- */
   --color-positive: #2f8a5b;       /* catalysts, gains */

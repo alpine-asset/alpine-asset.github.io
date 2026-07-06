@@ -179,12 +179,57 @@ its escape order is a security boundary. Moved to `src/lib/markdown.ts`
 
 ---
 
+## 7. Duplication in markup & content
+
+A follow-up audit for *repeated code* (not just tooling gaps) found the remaining
+copy-paste had migrated into `.astro` markup — below the reach of the CSS/format
+gates above. All addressed:
+
+### 7.1 — P2 · ✅ SVG logo + icons extracted; hex in markup eliminated
+
+The mountain mark was triplicated (`Nav`, `Footer`, `favicon.svg`) and the
+download icon duplicated (`ReportRail`, report template) — each copy with a
+**hard-coded hex fill/stroke** (`#233C43`, `#E97132`, `#E4E9EA`, `#fff`,
+`#E8601C`). These slipped past §1.1 because Stylelint's `color-no-hex` runs
+`postcss-html`, which sees `<style>` blocks but **not SVG presentation
+attributes**. Extracted `BrandMark.astro` and `DownloadIcon.astro`; colour now
+routes through tokens — the base facet inherits `currentColor` (nav navy / new
+`--color-footer-mark`), the accent and icon strokes use `var(--color-orange)` /
+the button's `currentColor`. The shared `.brand-name` wordmark style moved to
+`components.css`.
+
+### 7.2 — P2 · ✅ Tear-sheet field list unified
+
+The "which fields make a tear sheet, and how each is formatted" mapping was
+written twice — `ReportRail` built one array, `index.astro` hand-coded a
+four-cell subset — and had drifted. Extracted `src/lib/tear-sheet.ts`
+(`tearSheetRows`, pure, unit-tested); both surfaces now render from it. The
+inline `monthYear()` in the report template moved to `format.ts`
+(`formatMonthYear`) with a test, per the "derived values stay derived" rule.
+
+### 7.3 — P2 · ✅ Shared strings centralized
+
+The contact email appeared five times across four files (and the site
+description twice inside `BaseLayout`). Moved to `src/lib/site.ts`
+(`SITE_NAME` / `SITE_EMAIL` / `SITE_DESCRIPTION`). The contact page's dropdown
+options and "Reach out about" bullets now derive from one `topics` array.
+
+### 7.4 — P2 · ✅ Guard tests close the gate blind spots
+
+`tests/source-hygiene.test.ts` fails the build if a hex colour reappears in an
+SVG attribute, or if the raw email literal reappears in a page/component —
+catching §7.1/§7.3 regressions that Stylelint and types can't. One documented
+exception remains: the `<select>` chevron colour is baked into a `url()` data
+URI, where CSS custom properties can't resolve (commented in `contact.astro`).
+
 ## Still open (short list)
 
 1. **§2.4** — per-report `Article` JSON-LD.
 2. **§3.3** — contrast of `--color-muted-soft` (design call).
 3. **§4.3** — pin actions to SHAs (let Dependabot drive it).
 4. **§5.2** — Container-API component tests.
+5. **§7.4** — the select-chevron data-URI colour can't reference a token
+   (CSS limitation); revisit if the chevron moves to a masked pseudo-element.
 
 Everything else in this audit is implemented and enforced by `npm run verify`,
 which CI and the deploy workflow both run.
